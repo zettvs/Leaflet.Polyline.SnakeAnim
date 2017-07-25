@@ -183,17 +183,20 @@ L.LayerGroup.include({
 		}
 
 		var currentLayer = this._snakingLayers[this._snakingLayersDone];
+		var pause = currentLayer.options.snakingPause
+			? currentLayer.options.snakingPause
+			: this.options.snakingPause;
 
 		this._snakingLayersDone++;
 
 		this.addLayer(currentLayer);
 		if ('snakeIn' in currentLayer) {
 			currentLayer.once('snakeend', function(){
-				setTimeout(this._snakeNext.bind(this), this.options.snakingPause);
+				setTimeout(this._snakeNext.bind(this), pause);
 			}, this);
 			currentLayer.snakeIn();
 		} else {
-			setTimeout(this._snakeNext.bind(this), this.options.snakingPause);
+			setTimeout(this._snakeNext.bind(this), pause);
 		}
 
 
